@@ -2,6 +2,6 @@
 
 int AppExec(int argc, char *argv[]) {
     printf("App executed!\n");
-    
-    return 0;
+
+    return WindowManager_Init(argc, argv);
 }
