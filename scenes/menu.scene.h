@@ -5,7 +5,7 @@
 
 #include "../core/scenemanager.h"
 
-$SCENE(MenuScene, 
+$SCENE(MenuScene,
   GLFWwindow *window;
 );
 
