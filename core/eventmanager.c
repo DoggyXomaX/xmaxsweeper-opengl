@@ -16,6 +16,8 @@ void EventManager_Destroy() {
 }
 
 void EventManager_OnInput() {
-  if (glfwGetKey(EventManager->m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  if (glfwGetKey(EventManager->m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    puts("[ESC]");
     glfwSetWindowShouldClose(EventManager->m_window, true);
+  }
 }

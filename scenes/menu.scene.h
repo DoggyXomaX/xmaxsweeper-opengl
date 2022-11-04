@@ -3,8 +3,10 @@
 
 #include <GLFW/glfw3.h>
 
-int MenuScene_Awake(GLFWwindow *window);
-void MenuScene_Start(void);
-void MenuScene_Update(void);
+#include "../core/scenemanager.h"
+
+$SCENE(MenuScene, 
+  GLFWwindow *window;
+);
 
 #endif  // __MENU_SCENE_H__

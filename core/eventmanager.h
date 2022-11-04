@@ -3,15 +3,16 @@
 
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct {
-  GLFWwindow *m_window;
-} EventManager_private;
+#include "oop.h"
 
-int EventManager_Init(GLFWwindow *window);
-void EventManager_Destroy(void);
-void EventManager_OnInput(void);
+$CLASS(EventManager, (GLFWwindow *window),
+  GLFWwindow *m_window;
+);
+
+$METHOD(void, EventManager, OnInput, (void));
 
 #endif  // __EVENTMANAGER_H__

@@ -6,15 +6,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "oop.h"
+
 typedef void (*UpdateCallbackFunc)(GLFWwindow *);
 
-typedef struct {
+$CLASS(GameManager, (GLFWwindow *window),
   GLFWwindow *m_window;
   UpdateCallbackFunc m_updateCallback;
-} GameManager_private;
+);
 
-int GameManager_Init(GLFWwindow *window);
-void GameManager_Destroy(void);
-void GameManager_SetUpdateCallback(UpdateCallbackFunc updateCallback);
+$METHOD(void, GameManager, SetUpdateCallback, (UpdateCallbackFunc updateCallback));
 
 #endif  // __GAMEMANAGER_H__

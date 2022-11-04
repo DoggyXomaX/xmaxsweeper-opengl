@@ -6,9 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "oop.h"
+
 typedef void(*ResizeCallbackFunc)(GLFWwindow *, int, int);
 
-typedef struct {
+$CLASS(WindowManager, (GLFWwindow **out_window),
   const char *m_startTitle;
   const int *m_startWidth;
   const int *m_startHeight;
@@ -19,11 +21,9 @@ typedef struct {
   int m_minWidth;
   int m_minHeight;
   ResizeCallbackFunc m_resizeCallback;
-} WindowManager_private;
+);
 
-int WindowManager_Init(GLFWwindow **out_window);
-void WindowManager_Destroy(void);
-void WindowManager_SetMinimumWindowSize(int baseWidth);
-void WindowManager_SetResizeCallback(ResizeCallbackFunc resizeCallback);
+$METHOD(void, WindowManager, SetMinimumWindowSize, (int baseWidth));
+$METHOD(void, WindowManager, SetResizeCallback, (ResizeCallbackFunc resizeCallback));
 
 #endif  // __WINDOWMANAGER_H__

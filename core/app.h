@@ -4,15 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "oop.h"
 #include "eventmanager.h"
 #include "gamemanager.h"
 #include "windowmanager.h"
 
-typedef struct {
+$CLASS(App, (int argc, char *argv[]),
   GLFWwindow *m_window;
-} App_private;
-
-int App_Init(int argc, char *argv[]);
-void App_Destroy(void);
+);
 
 #endif  // __APP_H__

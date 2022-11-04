@@ -1,6 +1,6 @@
-CFLAGS = -O3 -Iinclude
+CFLAGS = -Iinclude
 LDFLAGS = -Llib -lglfw3 -lopengl32 -lgdi32
-FILES = *.c core/*.c scenes/*.c
+FILES = *.c core/*.c
 
 all:
 	mkdir -p release

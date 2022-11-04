@@ -1,7 +1,7 @@
 #include "windowmanager.h"
 
 // const:
-const char START_TITLE[] = "XmaxSweeper OpenGL";
+const char *START_TITLE = "XmaxSweeper OpenGL";
 const int START_WIDTH = 640;
 const int START_HEIGHT = 360;
 
@@ -46,11 +46,11 @@ int WindowManager_Init(GLFWwindow **out_window) {
     return -1;
   }
 
+  glfwMakeContextCurrent(WindowManager->m_window);
+
   glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
   glfwSetWindowAspectRatio(WindowManager->m_window, 16, 9);
-  glfwSetFramebufferSizeCallback(WindowManager->m_window, WindowManager_OnResize);
-
-  glfwMakeContextCurrent(WindowManager->m_window);
+  glfwSetFramebufferSizeCallback(WindowManager->m_window, &WindowManager_OnResize);
 
   *out_window = WindowManager->m_window;
 
