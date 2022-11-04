@@ -15,6 +15,6 @@ $CLASS(GameManager, (GLFWwindow *window),
   UpdateCallbackFunc m_updateCallback;
 );
 
-$METHOD(void, GameManager, SetUpdateCallback, (UpdateCallbackFunc updateCallback));
+$PUBLIC(void, GameManager, SetUpdateCallback, (UpdateCallbackFunc updateCallback));
 
 #endif  // __GAMEMANAGER_H__

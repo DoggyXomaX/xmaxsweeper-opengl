@@ -23,7 +23,7 @@ $CLASS(WindowManager, (GLFWwindow **out_window),
   ResizeCallbackFunc m_resizeCallback;
 );
 
-$METHOD(void, WindowManager, SetMinimumWindowSize, (int baseWidth));
-$METHOD(void, WindowManager, SetResizeCallback, (ResizeCallbackFunc resizeCallback));
+$PUBLIC(void, WindowManager, SetMinimumWindowSize, (int baseWidth));
+$PUBLIC(void, WindowManager, SetResizeCallback, (ResizeCallbackFunc resizeCallback));
 
 #endif  // __WINDOWMANAGER_H__

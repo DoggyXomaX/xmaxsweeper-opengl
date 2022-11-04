@@ -8,7 +8,7 @@
     struct_body                                          \
   } class_name##_private
 
-#define $METHOD(output_type, class_name, method_name, parameters) \
+#define $PUBLIC(output_type, class_name, method_name, parameters) \
   output_type class_name##_##method_name parameters
 
 #endif // __OOP_H__

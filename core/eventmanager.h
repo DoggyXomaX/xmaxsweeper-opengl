@@ -13,6 +13,6 @@ $CLASS(EventManager, (GLFWwindow *window),
   GLFWwindow *m_window;
 );
 
-$METHOD(void, EventManager, OnInput, (void));
+$PUBLIC(void, EventManager, OnInput, (void));
 
 #endif  // __EVENTMANAGER_H__
