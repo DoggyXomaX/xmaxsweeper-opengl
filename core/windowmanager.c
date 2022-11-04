@@ -1,23 +1,20 @@
 #include "windowmanager.h"
 
-// const:
 const char *START_TITLE = "XmaxSweeper OpenGL";
 const int START_WIDTH = 640;
 const int START_HEIGHT = 360;
 
-// private:
-WindowManager_private *WindowManager = NULL;
+$OBJECT(WindowManager);
 
-void WindowManager_OnResize(GLFWwindow *window, int w, int h) {
+$PRIVATE(void, WindowManager, OnResize, (GLFWwindow *window, int w, int h)) {
   WindowManager->m_width = w > WindowManager->m_minWidth ? w : WindowManager->m_minWidth;
   WindowManager->m_height = h > WindowManager->m_minHeight ? h : WindowManager->m_minHeight;
   if (WindowManager->m_resizeCallback != NULL)
     WindowManager->m_resizeCallback(window, w, h);
 }
 
-// public:
-int WindowManager_Init(GLFWwindow **out_window) {
-  WindowManager = (WindowManager_private*)malloc(sizeof(WindowManager_private));
+$PUBLIC(int, WindowManager, Init, (GLFWwindow **out_window)) {
+  $NEW(WindowManager);
 
   WindowManager->m_startTitle = START_TITLE;
   WindowManager->m_startWidth = &START_WIDTH;
@@ -57,16 +54,16 @@ int WindowManager_Init(GLFWwindow **out_window) {
   return 0;
 }
 
-void WindowManager_Destroy() {
-  free(WindowManager);
+$PUBLIC(void, WindowManager, Destroy, ()) {
+  $DESTROY(WindowManager);
 }
 
-void WindowManager_SetMinimumWindowSize(int baseWidth) {
+$PUBLIC(void, WindowManager, SetMinimumWindowSize, (int baseWidth)) {
   WindowManager->m_minWidth = baseWidth < 16 ? 16 : baseWidth;
   WindowManager->m_minHeight = WindowManager->m_minWidth / 16 * 9;
   glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
 }
 
-void WindowManager_SetResizeCallback(ResizeCallbackFunc resizeCallback) {
+$PUBLIC(void, WindowManager, SetResizeCallback, (ResizeCallbackFunc resizeCallback)) {
   WindowManager->m_resizeCallback = resizeCallback;
 }

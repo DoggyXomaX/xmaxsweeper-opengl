@@ -1,21 +1,21 @@
 #include "eventmanager.h"
 
-EventManager_private *EventManager = NULL;
+$OBJECT(EventManager);
 
 // public:
-int EventManager_Init(GLFWwindow *window) {
-  EventManager = (EventManager_private*)malloc(sizeof(EventManager_private));
+$PUBLIC(int, EventManager, Init, (GLFWwindow *window)) {
+  $NEW(EventManager);
 
   EventManager->m_window = window;
 
   return 0;
 }
 
-void EventManager_Destroy() {
-  free(EventManager);
+$PUBLIC(void, EventManager, Destroy, ()) {
+  $DESTROY(EventManager);
 }
 
-void EventManager_OnInput() {
+$PUBLIC(void, EventManager, OnInput, ()) {
   if (glfwGetKey(EventManager->m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     puts("[ESC]");
     glfwSetWindowShouldClose(EventManager->m_window, true);

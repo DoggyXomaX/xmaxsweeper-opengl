@@ -8,7 +8,7 @@
 
 #include "oop.h"
 
-typedef void (*UpdateCallbackFunc)(GLFWwindow *);
+$CALLBACK(UpdateCallbackFunc, void, (GLFWwindow*)); 
 
 $CLASS(GameManager, (GLFWwindow *window),
   GLFWwindow *m_window;

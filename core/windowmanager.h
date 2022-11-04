@@ -4,11 +4,11 @@
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 
 #include "oop.h"
 
-typedef void(*ResizeCallbackFunc)(GLFWwindow *, int, int);
+$CALLBACK(ResizeCallbackFunc, void, (GLFWwindow*, int, int));
 
 $CLASS(WindowManager, (GLFWwindow **out_window),
   const char *m_startTitle;

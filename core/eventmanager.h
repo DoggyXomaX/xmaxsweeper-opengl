@@ -9,9 +9,9 @@
 
 #include "oop.h"
 
-$CLASS(EventManager, (GLFWwindow *window),
+$CLASS(EventManager, (GLFWwindow *window), 
   GLFWwindow *m_window;
-);
+); 
 
 $PUBLIC(void, EventManager, OnInput, (void));
 

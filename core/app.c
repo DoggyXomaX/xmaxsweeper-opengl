@@ -1,11 +1,9 @@
 #include "app.h"
 
-// private:
-App_private *App = NULL;
+$OBJECT(App);
 
-// public:
-int App_Init(int argc, char *argv[]) {
-  App = (App_private*)malloc(sizeof(App_private));
+$PUBLIC(int, App, Init, (int argc, char *argvp[])) {
+  $NEW(App);
 
   App->m_window = NULL;
 
@@ -48,6 +46,6 @@ int App_Init(int argc, char *argv[]) {
   return 0;
 }
 
-void App_Destroy() {
-  free(App);
+$PUBLIC(void, App, Destroy, ()) {
+  $DESTROY(App);
 }
