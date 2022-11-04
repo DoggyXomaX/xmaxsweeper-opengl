@@ -11,16 +11,12 @@
 $CALLBACK(ResizeCallbackFunc, void, (GLFWwindow*, int, int));
 
 $CLASS(WindowManager, (GLFWwindow **out_window),
-  const char *m_startTitle;
-  const int *m_startWidth;
-  const int *m_startHeight;
-
   GLFWwindow *m_window;
+  ResizeCallbackFunc m_resizeCallback;
   int m_width;
   int m_height;
   int m_minWidth;
   int m_minHeight;
-  ResizeCallbackFunc m_resizeCallback;
 );
 
 $PUBLIC(void, WindowManager, SetMinimumWindowSize, (int baseWidth));

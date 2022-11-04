@@ -1,8 +1,10 @@
 #include "windowmanager.h"
 
-const char *START_TITLE = "XmaxSweeper OpenGL";
-const int START_WIDTH = 640;
-const int START_HEIGHT = 360;
+const char DEFAULT_TITLE[] = "XmaxSweeper OpenGL";
+const int DEFAULT_WIDTH = 640;
+const int DEFAULT_HEIGHT = 360;
+const int DEFAULT_MIN_WIDTH = 320;
+const int DEFAULT_MIN_HEIGHT = 180;
 
 $OBJECT(WindowManager);
 
@@ -16,17 +18,12 @@ $PRIVATE(void, WindowManager, OnResize, (GLFWwindow *window, int w, int h)) {
 $PUBLIC(int, WindowManager, Init, (GLFWwindow **out_window)) {
   $NEW(WindowManager);
 
-  WindowManager->m_startTitle = START_TITLE;
-  WindowManager->m_startWidth = &START_WIDTH;
-  WindowManager->m_startHeight = &START_HEIGHT;
-
-  WindowManager->m_width = *(WindowManager->m_startWidth);
-  WindowManager->m_height = *(WindowManager->m_startHeight);
-  WindowManager->m_minWidth = 320;
-  WindowManager->m_minHeight = 180;
-
   WindowManager->m_window = NULL;
   WindowManager->m_resizeCallback = NULL;
+  WindowManager->m_width = DEFAULT_WIDTH;
+  WindowManager->m_height = DEFAULT_HEIGHT;
+  WindowManager->m_minWidth = DEFAULT_MIN_WIDTH;
+  WindowManager->m_minHeight = DEFAULT_MIN_HEIGHT;
 
   glfwInit();
 
@@ -35,7 +32,7 @@ $PUBLIC(int, WindowManager, Init, (GLFWwindow **out_window)) {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-  WindowManager->m_window = glfwCreateWindow(*(WindowManager->m_startWidth), *(WindowManager->m_startHeight), WindowManager->m_startTitle, NULL, NULL);
+  WindowManager->m_window = glfwCreateWindow(WindowManager->m_width, WindowManager->m_height, DEFAULT_TITLE, NULL, NULL);
   if (WindowManager->m_window == NULL) {
     fprintf(stderr, "Failed to create GLFW window\n");
     glfwTerminate();
