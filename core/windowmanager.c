@@ -65,6 +65,7 @@ int WindowManager_Init(int argc, char *argv[]) {
 
   while (!glfwWindowShouldClose(m_window)) {
     WindowManager_Update(m_window);
+    EventManager_OnInput(m_window);
     glfwPollEvents();
   }
 
