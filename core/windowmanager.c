@@ -1,30 +1,35 @@
 #include "windowmanager.h"
 
+// const:
+const char START_TITLE[] = "XmaxSweeper OpenGL";
+const int START_WIDTH = 640;
+const int START_HEIGHT = 360;
+
 // private:
-GLFWwindow *m_window = NULL;
-const char m_startTitle[] = "XmaxSweeper OpenGL";
-const int m_startWidth = 640;
-const int m_startHeight = 360;
-int m_width;
-int m_height;
-int m_minWidth = 320;
-int m_minHeight = 180;
+WindowManager_private *WindowManager = NULL;
 
 void WindowManager_OnResize(GLFWwindow *window, int w, int h) {
-  m_width = w > 300 ? w : 300;
-  m_height = h > 200 ? h : 200;
-  glViewport(0, 0, m_width, m_height);
-}
-
-void WindowManager_Update(GLFWwindow *window) {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glfwSwapBuffers(window);
+  WindowManager->m_width = w > WindowManager->m_minWidth ? w : WindowManager->m_minWidth;
+  WindowManager->m_height = h > WindowManager->m_minHeight ? h : WindowManager->m_minHeight;
+  if (WindowManager->m_resizeCallback != NULL)
+    WindowManager->m_resizeCallback(window, w, h);
 }
 
 // public:
-int WindowManager_Init(int argc, char *argv[]) {
-  m_width = m_startWidth;
-  m_height = m_startHeight;
+int WindowManager_Init(GLFWwindow **out_window) {
+  WindowManager = (WindowManager_private*)malloc(sizeof(WindowManager_private));
+
+  WindowManager->m_startTitle = START_TITLE;
+  WindowManager->m_startWidth = &START_WIDTH;
+  WindowManager->m_startHeight = &START_HEIGHT;
+
+  WindowManager->m_width = *(WindowManager->m_startWidth);
+  WindowManager->m_height = *(WindowManager->m_startHeight);
+  WindowManager->m_minWidth = 320;
+  WindowManager->m_minHeight = 180;
+
+  WindowManager->m_window = NULL;
+  WindowManager->m_resizeCallback = NULL;
 
   glfwInit();
 
@@ -33,49 +38,35 @@ int WindowManager_Init(int argc, char *argv[]) {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-  m_window = glfwCreateWindow(m_startWidth, m_startHeight, m_startTitle, NULL, NULL);
-  if (m_window == NULL) {
+  WindowManager->m_window = glfwCreateWindow(*(WindowManager->m_startWidth), *(WindowManager->m_startHeight), WindowManager->m_startTitle, NULL, NULL);
+  if (WindowManager->m_window == NULL) {
     fprintf(stderr, "Failed to create GLFW window\n");
     glfwTerminate();
+    WindowManager_Destroy();
     return -1;
   }
 
-  glfwSetWindowSizeLimits(m_window, 320, 180, GLFW_DONT_CARE, GLFW_DONT_CARE);
-  glfwSetWindowAspectRatio(m_window, 16, 9);
-  glfwSetFramebufferSizeCallback(m_window, WindowManager_OnResize);
-  glfwSetWindowRefreshCallback(m_window, WindowManager_Update);
+  glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+  glfwSetWindowAspectRatio(WindowManager->m_window, 16, 9);
+  glfwSetFramebufferSizeCallback(WindowManager->m_window, WindowManager_OnResize);
 
-  glfwMakeContextCurrent(m_window);
+  glfwMakeContextCurrent(WindowManager->m_window);
 
-  if (gl3wInit()) {
-    fprintf(stderr, "Failed to gl3w initialize OpenGL\n");
-    return -2;
-  }
-
-  if (!gl3wIsSupported(3, 3)) {
-    fprintf(stderr, "OpenGL 3.3 not supported\n");
-    return -3;
-  }
-
-  printf("OpenGL %s, GLSL %s\n", glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-  glClearDepth(1.0);
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  glEnable(GL_DEPTH_TEST);
-
-  while (!glfwWindowShouldClose(m_window)) {
-    WindowManager_Update(m_window);
-    EventManager_OnInput(m_window);
-    glfwPollEvents();
-  }
-
-  glfwTerminate();
+  *out_window = WindowManager->m_window;
 
   return 0;
 }
 
+void WindowManager_Destroy() {
+  free(WindowManager);
+}
+
 void WindowManager_SetMinimumWindowSize(int baseWidth) {
-  m_minWidth = baseWidth < 16 ? 16 : baseWidth;
-  m_minHeight = m_minWidth / 16 * 9;
-  glfwSetWindowSizeLimits(m_window, m_minWidth, m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+  WindowManager->m_minWidth = baseWidth < 16 ? 16 : baseWidth;
+  WindowManager->m_minHeight = WindowManager->m_minWidth / 16 * 9;
+  glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+}
+
+void WindowManager_SetResizeCallback(ResizeCallbackFunc resizeCallback) {
+  WindowManager->m_resizeCallback = resizeCallback;
 }

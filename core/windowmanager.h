@@ -6,9 +6,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "eventmanager.h"
+typedef void(*ResizeCallbackFunc)(GLFWwindow *, int, int);
 
-int WindowManager_Init(int argc, char *argv[]);
+typedef struct {
+  const char *m_startTitle;
+  const int *m_startWidth;
+  const int *m_startHeight;
+
+  GLFWwindow *m_window;
+  int m_width;
+  int m_height;
+  int m_minWidth;
+  int m_minHeight;
+  ResizeCallbackFunc m_resizeCallback;
+} WindowManager_private;
+
+int WindowManager_Init(GLFWwindow **out_window);
+void WindowManager_Destroy(void);
 void WindowManager_SetMinimumWindowSize(int baseWidth);
+void WindowManager_SetResizeCallback(ResizeCallbackFunc resizeCallback);
 
 #endif  // __WINDOWMANAGER_H__
