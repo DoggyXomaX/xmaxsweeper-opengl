@@ -2,20 +2,20 @@
 
 object (GameManager);
 
-private (GameManager, void, Update, (GLFWwindow *window)) {
+private (GameManager, void, Update(GLFWwindow *window)) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glfwSwapBuffers(GameManager->m_window);
   if (GameManager->m_updateCallback != NULL)
     GameManager->m_updateCallback(GameManager->m_window);
 }
 
-private (GameManager, void, Prepare, ()) {
+private (GameManager, void, Prepare()) {
   glClearDepth(1.0);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glEnable(GL_DEPTH_TEST);
 }
 
-public (GameManager, int, Init, (GLFWwindow *window)) {
+public (GameManager, int, Init(GLFWwindow *window)) {
   new (GameManager);
 
   GameManager->m_window = window;
@@ -42,10 +42,10 @@ public (GameManager, int, Init, (GLFWwindow *window)) {
   return 0;
 }
 
-public (GameManager, void, Destroy, ()) {
+public (GameManager, void, Destroy()) {
   destroy (GameManager);
 }
 
-public (GameManager, void, SetUpdateCallback, (UpdateCallbackFunc updateCallback)) {
+public (GameManager, void, SetUpdateCallback(UpdateCallbackFunc updateCallback)) {
   GameManager->m_updateCallback = updateCallback;
 }

@@ -15,6 +15,6 @@ class (GameManager, (GLFWwindow *window),
   UpdateCallbackFunc m_updateCallback;
 );
 
-public (GameManager, void, SetUpdateCallback, (UpdateCallbackFunc updateCallback));
+public (GameManager, void, SetUpdateCallback(UpdateCallbackFunc updateCallback));
 
 #endif  // __GAMEMANAGER_H__

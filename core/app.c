@@ -2,7 +2,7 @@
 
 object (App);
 
-public (App, int, Init, (int argc, char *argv[])) {
+public (App, int, Init(int argc, char *argv[])) {
   new (App);
 
   App->m_window = NULL;
@@ -46,6 +46,6 @@ public (App, int, Init, (int argc, char *argv[])) {
   return 0;
 }
 
-public (App, void, Destroy, ()) {
+public (App, void, Destroy()) {
   destroy (App);
 }

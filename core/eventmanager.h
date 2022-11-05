@@ -13,6 +13,6 @@ class (EventManager, (GLFWwindow *window),
   GLFWwindow *m_window;
 ); 
 
-public (EventManager, void, OnInput, (void));
+public (EventManager, void, OnInput(void));
 
 #endif  // __EVENTMANAGER_H__

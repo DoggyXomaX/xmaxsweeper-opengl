@@ -14,11 +14,11 @@
 #define new(class_name) \
   class_name = (class_name##_private*)malloc(sizeof(class_name##_private))
 
-#define public(class_name, output_type, method_name, parameters) \
-  output_type class_name##_##method_name parameters
+#define public(class_name, output_type, method) \
+  output_type class_name##_##method
 
-#define private(class_name, output_type, method_name, parameters) \
-  output_type class_name##_##method_name parameters
+#define private(class_name, output_type, method) \
+  output_type class_name##_##method
 
 #define callback(name, output_type, parameters) \
   typedef output_type (*name) parameters

@@ -2,7 +2,7 @@
 
 object (EventManager);
 
-public (EventManager, int, Init, (GLFWwindow *window)) {
+public (EventManager, int, Init(GLFWwindow *window)) {
   new (EventManager);
 
   EventManager->m_window = window;
@@ -10,11 +10,11 @@ public (EventManager, int, Init, (GLFWwindow *window)) {
   return 0;
 }
 
-public (EventManager, void, Destroy, ()) {
+public (EventManager, void, Destroy()) {
   destroy (EventManager);
 }
 
-public (EventManager, void, OnInput, ()) {
+public (EventManager, void, OnInput()) {
   if (glfwGetKey(EventManager->m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     puts("[ESC]");
     glfwSetWindowShouldClose(EventManager->m_window, true);

@@ -19,7 +19,7 @@ class (WindowManager, (GLFWwindow **out_window),
   int m_minHeight;
 );
 
-public (WindowManager, void, SetMinimumWindowSize, (int baseWidth));
-public (WindowManager, void, SetResizeCallback, (ResizeCallbackFunc resizeCallback));
+public (WindowManager, void, SetMinimumWindowSize(int baseWidth));
+public (WindowManager, void, SetResizeCallback(ResizeCallbackFunc resizeCallback));
 
 #endif  // __WINDOWMANAGER_H__
