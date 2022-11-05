@@ -6,17 +6,17 @@ const int DEFAULT_HEIGHT = 360;
 const int DEFAULT_MIN_WIDTH = 320;
 const int DEFAULT_MIN_HEIGHT = 180;
 
-$OBJECT(WindowManager);
+object (WindowManager);
 
-$PRIVATE(void, WindowManager, OnResize, (GLFWwindow *window, int w, int h)) {
+private (WindowManager, void, OnResize, (GLFWwindow *window, int w, int h)) {
   WindowManager->m_width = w > WindowManager->m_minWidth ? w : WindowManager->m_minWidth;
   WindowManager->m_height = h > WindowManager->m_minHeight ? h : WindowManager->m_minHeight;
   if (WindowManager->m_resizeCallback != NULL)
     WindowManager->m_resizeCallback(window, w, h);
 }
 
-$PUBLIC(int, WindowManager, Init, (GLFWwindow **out_window)) {
-  $NEW(WindowManager);
+public (WindowManager, int, Init, (GLFWwindow **out_window)) {
+  new (WindowManager);
 
   WindowManager->m_window = NULL;
   WindowManager->m_resizeCallback = NULL;
@@ -51,16 +51,16 @@ $PUBLIC(int, WindowManager, Init, (GLFWwindow **out_window)) {
   return 0;
 }
 
-$PUBLIC(void, WindowManager, Destroy, ()) {
-  $DESTROY(WindowManager);
+public (WindowManager, void, Destroy, ()) {
+  destroy (WindowManager);
 }
 
-$PUBLIC(void, WindowManager, SetMinimumWindowSize, (int baseWidth)) {
+public (WindowManager, void, SetMinimumWindowSize, (int baseWidth)) {
   WindowManager->m_minWidth = baseWidth < 16 ? 16 : baseWidth;
   WindowManager->m_minHeight = WindowManager->m_minWidth / 16 * 9;
   glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
 }
 
-$PUBLIC(void, WindowManager, SetResizeCallback, (ResizeCallbackFunc resizeCallback)) {
+public (WindowManager, void, SetResizeCallback, (ResizeCallbackFunc resizeCallback)) {
   WindowManager->m_resizeCallback = resizeCallback;
 }

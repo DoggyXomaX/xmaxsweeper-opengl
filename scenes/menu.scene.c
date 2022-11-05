@@ -1,19 +1,19 @@
 #include "menu.scene.h"
 
-$OBJECT(MenuScene);
+object (MenuScene);
 
-$PUBLIC(int, MenuScene, Init, (GLFWwindow *window)) {
-  $NEW(MenuScene);
+public (MenuScene, int, Init, (GLFWwindow *window)) {
+  new (MenuScene);
 }
 
-$PUBLIC(void, MenuScene, Destroy, ()) {
-  $DESTROY(MenuScene);
+public (MenuScene, void, Destroy, ()) {
+  destroy (MenuScene);
 }
 
-$PUBLIC(void, MenuScene, Start, (GLFWwindow *window)) {
+public (MenuScene, void, Start, (GLFWwindow *window)) {
   // Start scene
 }
 
-$PUBLIC(void, MenuScene, Update, (GLFWwindow *window)) {
+public (MenuScene, void, Update, (GLFWwindow *window)) {
   // Update scene
 }

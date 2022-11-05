@@ -4,8 +4,9 @@
 #include <GLFW/glfw3.h>
 
 #include "../core/scenemanager.h"
+#include "../core/oop.h"
 
-$SCENE(MenuScene,
+scene (MenuScene,
   GLFWwindow *window;
 );
 

@@ -9,7 +9,7 @@
 #include "gamemanager.h"
 #include "windowmanager.h"
 
-$CLASS(App, (int argc, char *argv[]),
+class (App, (int argc, char *argv[]),
   GLFWwindow *m_window;
 );
 

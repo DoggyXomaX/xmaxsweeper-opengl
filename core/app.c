@@ -1,9 +1,9 @@
 #include "app.h"
 
-$OBJECT(App);
+object (App);
 
-$PUBLIC(int, App, Init, (int argc, char *argvp[])) {
-  $NEW(App);
+public (App, int, Init, (int argc, char *argv[])) {
+  new (App);
 
   App->m_window = NULL;
 
@@ -46,6 +46,6 @@ $PUBLIC(int, App, Init, (int argc, char *argvp[])) {
   return 0;
 }
 
-$PUBLIC(void, App, Destroy, ()) {
-  $DESTROY(App);
+public (App, void, Destroy, ()) {
+  destroy (App);
 }

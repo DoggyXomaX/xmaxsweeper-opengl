@@ -8,9 +8,9 @@
 
 #include "oop.h"
 
-$CALLBACK(ResizeCallbackFunc, void, (GLFWwindow*, int, int));
+callback (ResizeCallbackFunc, void, (GLFWwindow*, int, int));
 
-$CLASS(WindowManager, (GLFWwindow **out_window),
+class (WindowManager, (GLFWwindow **out_window),
   GLFWwindow *m_window;
   ResizeCallbackFunc m_resizeCallback;
   int m_width;
@@ -19,7 +19,7 @@ $CLASS(WindowManager, (GLFWwindow **out_window),
   int m_minHeight;
 );
 
-$PUBLIC(void, WindowManager, SetMinimumWindowSize, (int baseWidth));
-$PUBLIC(void, WindowManager, SetResizeCallback, (ResizeCallbackFunc resizeCallback));
+public (WindowManager, void, SetMinimumWindowSize, (int baseWidth));
+public (WindowManager, void, SetResizeCallback, (ResizeCallbackFunc resizeCallback));
 
 #endif  // __WINDOWMANAGER_H__

@@ -9,10 +9,10 @@
 
 #include "oop.h"
 
-$CLASS(EventManager, (GLFWwindow *window), 
+class (EventManager, (GLFWwindow *window), 
   GLFWwindow *m_window;
 ); 
 
-$PUBLIC(void, EventManager, OnInput, (void));
+public (EventManager, void, OnInput, (void));
 
 #endif  // __EVENTMANAGER_H__

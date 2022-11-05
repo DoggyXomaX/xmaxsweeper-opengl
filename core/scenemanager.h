@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#define $SCENE(scene_name, struct_body)   \
+#define scene(scene_name, struct_body)   \
   int scene_name##_Init(GLFWwindow *window);    \
   void scene_name##_Destroy(void);              \
   void scene_name##_Start(GLFWwindow *window);  \

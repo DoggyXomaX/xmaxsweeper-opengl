@@ -8,13 +8,13 @@
 
 #include "oop.h"
 
-$CALLBACK(UpdateCallbackFunc, void, (GLFWwindow*)); 
+callback (UpdateCallbackFunc, void, (GLFWwindow*)); 
 
-$CLASS(GameManager, (GLFWwindow *window),
+class (GameManager, (GLFWwindow *window),
   GLFWwindow *m_window;
   UpdateCallbackFunc m_updateCallback;
 );
 
-$PUBLIC(void, GameManager, SetUpdateCallback, (UpdateCallbackFunc updateCallback));
+public (GameManager, void, SetUpdateCallback, (UpdateCallbackFunc updateCallback));
 
 #endif  // __GAMEMANAGER_H__

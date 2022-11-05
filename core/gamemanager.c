@@ -1,22 +1,22 @@
 #include "gamemanager.h"
 
-$OBJECT(GameManager);
+object (GameManager);
 
-$PRIVATE(void, GameManager, Update, (GLFWwindow *window)) {
+private (GameManager, void, Update, (GLFWwindow *window)) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glfwSwapBuffers(GameManager->m_window);
   if (GameManager->m_updateCallback != NULL)
     GameManager->m_updateCallback(GameManager->m_window);
 }
 
-$PRIVATE(void, GameManager, Prepare, ()) {
+private (GameManager, void, Prepare, ()) {
   glClearDepth(1.0);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glEnable(GL_DEPTH_TEST);
 }
 
-$PUBLIC(int, GameManager, Init, (GLFWwindow *window)) {
-  $NEW(GameManager);
+public (GameManager, int, Init, (GLFWwindow *window)) {
+  new (GameManager);
 
   GameManager->m_window = window;
   GameManager->m_updateCallback = NULL;
@@ -42,10 +42,10 @@ $PUBLIC(int, GameManager, Init, (GLFWwindow *window)) {
   return 0;
 }
 
-$PUBLIC(void, GameManager, Destroy, ()) {
-  $DESTROY(GameManager);
+public (GameManager, void, Destroy, ()) {
+  destroy (GameManager);
 }
 
-$PUBLIC(void, GameManager, SetUpdateCallback, (UpdateCallbackFunc updateCallback)) {
+public (GameManager, void, SetUpdateCallback, (UpdateCallbackFunc updateCallback)) {
   GameManager->m_updateCallback = updateCallback;
 }
