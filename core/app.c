@@ -9,7 +9,7 @@ private (App, void, OnInput()) {
 
   if (glfwGetKey(this->m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     puts("[ESC]");
-    // glfwSetWindowShouldClose(this->m_window, true);
+    glfwSetWindowShouldClose(this->m_window, true);
     return;
   }
 
