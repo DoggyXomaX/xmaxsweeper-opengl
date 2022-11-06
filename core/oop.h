@@ -40,6 +40,7 @@
 #define invoke(class_name, method) \
   class_name##_##method
 
-
+#define lengthof(param) \
+  sizeof(param) / sizeof((param)[0])
 
 #endif // __OOP_H__
