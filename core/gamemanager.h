@@ -1,6 +1,7 @@
 #ifndef __GAMEMANAGER_H__
 #define __GAMEMANAGER_H__
 
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,6 +1,7 @@
 #ifndef __SCENE_TEMPLATE__
 #define __SCENE_TEMPLATE__
 
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 #include <stdbool.h>
 

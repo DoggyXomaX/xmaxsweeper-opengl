@@ -1,4 +1,3 @@
-#include <GL/gl3w.h>
 #include "gamemanager.h"
 
 object (GameManager);

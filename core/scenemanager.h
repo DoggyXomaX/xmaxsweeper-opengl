@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
 #include "oop.h"
