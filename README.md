@@ -5,6 +5,7 @@
 ![Мыш](./.assets/preview.png)
 
 **P.S**
+
 ![Github](./.assets/preview-github.png)
 
 ## Условия состязания
