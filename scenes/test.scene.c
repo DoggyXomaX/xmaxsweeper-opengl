@@ -13,7 +13,7 @@ public (TestScene, void, Destroy(void)) {
 }
 
 public (TestScene, void, Start(GLFWwindow* window)) {
-  glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
+  glClearColor(0.0f, 0.5f, 0.5f, 1.0f);
   puts("Test scene start");
 }
 
