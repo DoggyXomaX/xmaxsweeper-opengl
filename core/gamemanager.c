@@ -1,12 +1,17 @@
+#include <GL/gl3w.h>
 #include "gamemanager.h"
 
 object (GameManager);
 
-private (GameManager, void, Update(GLFWwindow *window)) {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glfwSwapBuffers(GameManager->m_window);
-  if (GameManager->m_updateCallback != NULL)
-    GameManager->m_updateCallback(GameManager->m_window);
+private (GameManager, void, MainLoop(GLFWwindow *window)) {
+  context (GameManager);
+  
+  if (this->m_updateCallback == nullptr) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glfwSwapBuffers(this->m_window);
+  } else {
+    this->m_updateCallback(this->m_window);
+  }
 }
 
 private (GameManager, void, Prepare()) {
@@ -17,27 +22,26 @@ private (GameManager, void, Prepare()) {
 
 public (GameManager, int, Init(GLFWwindow *window)) {
   new (GameManager);
+  context (GameManager);
 
-  GameManager->m_window = window;
-  GameManager->m_updateCallback = NULL;
+  this->m_window = window;
+  this->m_updateCallback = nullptr;
 
   if (gl3wInit()) {
     fprintf(stderr, "Failed to gl3w initialize OpenGL\n");
-    GameManager_Destroy();
     return -2;
   }
 
   if (!gl3wIsSupported(3, 3)) {
     fprintf(stderr, "OpenGL 3.3 not supported\n");
-    GameManager_Destroy();
     return -3;
   }
 
   printf("OpenGL %s, GLSL %s\n", glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-  GameManager_Prepare();
+  invoke(GameManager, Prepare());
 
-  glfwSetWindowRefreshCallback(GameManager->m_window, &GameManager_Update);
+  glfwSetWindowRefreshCallback(this->m_window, func (GameManager, MainLoop));
 
   return 0;
 }
@@ -46,6 +50,7 @@ public (GameManager, void, Destroy()) {
   destroy (GameManager);
 }
 
-public (GameManager, void, SetUpdateCallback(UpdateCallbackFunc updateCallback)) {
-  GameManager->m_updateCallback = updateCallback;
+public (GameManager, void, SetUpdateCallback(UpdateCallback updateCallback)) {
+  context (GameManager);
+  this->m_updateCallback = updateCallback;
 }

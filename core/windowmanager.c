@@ -9,21 +9,24 @@ const int DEFAULT_MIN_HEIGHT = 180;
 object (WindowManager);
 
 private (WindowManager, void, OnResize(GLFWwindow *window, int w, int h)) {
-  WindowManager->m_width = w > WindowManager->m_minWidth ? w : WindowManager->m_minWidth;
-  WindowManager->m_height = h > WindowManager->m_minHeight ? h : WindowManager->m_minHeight;
-  if (WindowManager->m_resizeCallback != NULL)
-    WindowManager->m_resizeCallback(window, w, h);
+  context (WindowManager);
+
+  this->m_width = w > this->m_minWidth ? w : this->m_minWidth;
+  this->m_height = h > this->m_minHeight ? h : this->m_minHeight;
+  if (this->m_resizeCallback != nullptr)
+    this->m_resizeCallback(window, this->m_width, this->m_height);
 }
 
 public (WindowManager, int, Init(GLFWwindow **out_window)) {
   new (WindowManager);
+  context (WindowManager);
 
-  WindowManager->m_window = NULL;
-  WindowManager->m_resizeCallback = NULL;
-  WindowManager->m_width = DEFAULT_WIDTH;
-  WindowManager->m_height = DEFAULT_HEIGHT;
-  WindowManager->m_minWidth = DEFAULT_MIN_WIDTH;
-  WindowManager->m_minHeight = DEFAULT_MIN_HEIGHT;
+  this->m_window = nullptr;
+  this->m_resizeCallback = nullptr;
+  this->m_width = DEFAULT_WIDTH;
+  this->m_height = DEFAULT_HEIGHT;
+  this->m_minWidth = DEFAULT_MIN_WIDTH;
+  this->m_minHeight = DEFAULT_MIN_HEIGHT;
 
   glfwInit();
 
@@ -32,21 +35,20 @@ public (WindowManager, int, Init(GLFWwindow **out_window)) {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-  WindowManager->m_window = glfwCreateWindow(WindowManager->m_width, WindowManager->m_height, DEFAULT_TITLE, NULL, NULL);
-  if (WindowManager->m_window == NULL) {
+  this->m_window = glfwCreateWindow(this->m_width, this->m_height, DEFAULT_TITLE, nullptr, nullptr);
+  if (this->m_window == nullptr) {
     fprintf(stderr, "Failed to create GLFW window\n");
     glfwTerminate();
-    WindowManager_Destroy();
     return -1;
   }
 
-  glfwMakeContextCurrent(WindowManager->m_window);
+  glfwMakeContextCurrent(this->m_window);
 
-  glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
-  glfwSetWindowAspectRatio(WindowManager->m_window, 16, 9);
-  glfwSetFramebufferSizeCallback(WindowManager->m_window, &WindowManager_OnResize);
+  glfwSetWindowSizeLimits(this->m_window, this->m_minWidth, this->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+  glfwSetWindowAspectRatio(this->m_window, 16, 9);
+  glfwSetFramebufferSizeCallback(this->m_window, func (WindowManager, OnResize));
 
-  *out_window = WindowManager->m_window;
+  *out_window = this->m_window;
 
   return 0;
 }
@@ -56,12 +58,14 @@ public (WindowManager, void, Destroy()) {
 }
 
 public (WindowManager, void, SetMinimumWindowSize(int baseWidth)) {
-  WindowManager->m_minWidth = baseWidth < 16 ? 16 : baseWidth;
-  WindowManager->m_minHeight = WindowManager->m_minWidth / 16 * 9;
-  glfwSetWindowSizeLimits(WindowManager->m_window, WindowManager->m_minWidth, WindowManager->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+  context (WindowManager);
+  this->m_minWidth = baseWidth < 16 ? 16 : baseWidth;
+  this->m_minHeight = this->m_minWidth / 16 * 9;
+  glfwSetWindowSizeLimits(this->m_window, this->m_minWidth, this->m_minHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
 }
 
 public (WindowManager, void, SetResizeCallback(ResizeCallbackFunc resizeCallback)) {
-  WindowManager->m_resizeCallback = resizeCallback;
+  context (WindowManager);
+  this->m_resizeCallback = resizeCallback;
 }
 

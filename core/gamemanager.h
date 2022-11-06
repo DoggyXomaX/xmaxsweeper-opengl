@@ -1,20 +1,20 @@
 #ifndef __GAMEMANAGER_H__
 #define __GAMEMANAGER_H__
 
-#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "oop.h"
 
-callback (UpdateCallbackFunc, void, (GLFWwindow*)); 
+callback (UpdateCallback, void, (GLFWwindow*)); 
 
 class (GameManager, (GLFWwindow *window),
   GLFWwindow *m_window;
-  UpdateCallbackFunc m_updateCallback;
+  UpdateCallback m_updateCallback;
 );
 
-public (GameManager, void, SetUpdateCallback(UpdateCallbackFunc updateCallback));
+public (GameManager, void, MainLoop(GLFWwindow *window));
+public (GameManager, void, SetUpdateCallback(UpdateCallback updateCallback));
 
 #endif  // __GAMEMANAGER_H__
