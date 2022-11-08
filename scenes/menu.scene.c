@@ -23,10 +23,25 @@ public (MenuScene, int, Init(GLFWwindow *window)) {
 
   this->m_time = 0;
 
+  this->m_vbo = 0;
+  this->m_ebo = 0;
+  this->m_vao = 0;
+
   return 0;
 }
 
 public (MenuScene, void, Destroy()) {
+  context (MenuScene);
+
+  if (this->m_vbo != 0)
+    glDeleteBuffers(1, &this->m_vbo);
+  
+  if (this->m_ebo != 0)
+    glDeleteBuffers(1, &this->m_ebo);
+
+  if (this->m_vao != 0)
+    glDeleteVertexArrays(1, &this->m_vao); 
+
   destroy (MenuScene);
 }
 
@@ -123,7 +138,7 @@ public (MenuScene, void, Update(GLFWwindow *window)) {
     fflush(stdout);
   }
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glUseProgram(this->m_shaderId);
 
   glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo);
