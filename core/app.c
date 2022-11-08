@@ -66,8 +66,9 @@ public (App, int, Init(int argc, char *argv[])) {
   invoke (SceneManager, ChangeScene(0));
 
   while (!glfwWindowShouldClose(this->m_window)) {
-    invoke (GameManager, MainLoop(this->m_window));
     glfwPollEvents();
+
+    invoke (GameManager, MainLoop(this->m_window));
   }
   
   return result;

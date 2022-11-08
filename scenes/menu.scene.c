@@ -1,9 +1,9 @@
 #include "menu.scene.h"
 
 const float TRIANGLE[9] = {
-  -0.5f, -0.5f, 0.0f,
-   0.5f, -0.5f, 0.0f,
-   0.0f,  0.5f, 0.0f,
+  -0.5f * (9.0f / 16.0f), -0.5f, 0.0f,
+   0.5f * (9.0f / 16.0f), -0.5f, 0.0f,
+   0.0f * (9.0f / 16.0f),  0.5f, 0.0f,
 };
 
 #include <basic.vert.h>
@@ -45,11 +45,14 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   puts("MenuScene: START");
   glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
   
+  // Buffers
   glGenBuffers(1, &this->m_vbo);
-  glGenVertexArrays(1, &this->m_vao);
-  glBindVertexArray(this->m_vao);
   glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(TRIANGLE), this->m_vertexInput, GL_STATIC_DRAW);
+
+  // VertexArray
+  glGenVertexArrays(1, &this->m_vao);
+  glBindVertexArray(this->m_vao);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
 
