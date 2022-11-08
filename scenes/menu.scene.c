@@ -57,11 +57,11 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   glEnableVertexAttribArray(0);
 
   // Vertex shader
-  unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertexShader, 1, &BASIC_VERT, NULL);
   glCompileShader(vertexShader);
-  int success;
-  char infoLog[512];
+  GLint success;
+  GLchar infoLog[512];
   glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
@@ -70,7 +70,7 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   }
 
   // Fragment shader
-  unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+  GLint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragmentShader, 1, &BASIC_FRAG, NULL);
   glCompileShader(fragmentShader);
   glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
@@ -103,7 +103,8 @@ public (MenuScene, void, Update(GLFWwindow *window)) {
   this->m_time++;
   if (this->m_time >= 60) {
     this->m_time = 0;
-    printf("MenuScene: TICK\n");
+    puts("MenuScene: TICK");
+    fflush(stdout);
   }
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 

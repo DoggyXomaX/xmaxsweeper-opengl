@@ -32,6 +32,7 @@ public (App, int, Init(int argc, char *argv[])) {
   this->m_currentScene = 0;
 
   printf("App executed!\n");
+  fflush(stdout);
 
   int result = invoke (WindowManager, Init(&(this->m_window)));
   if (result != 0 || this->m_window == nullptr) {
@@ -64,6 +65,7 @@ public (App, int, Init(int argc, char *argv[])) {
 
   printf("Scene count: %d\n", invoke (SceneManager, GetSceneCount()));
   invoke (SceneManager, ChangeScene(0));
+  fflush(stdout);
 
   while (!glfwWindowShouldClose(this->m_window)) {
     glfwPollEvents();

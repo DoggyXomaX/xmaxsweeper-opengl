@@ -25,6 +25,7 @@ public (TestScene, void, Update(GLFWwindow* window)) {
   first_update (TestScene);
 
   puts("Test scene update");
+  fflush(stdout);
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glfwSwapBuffers(window);

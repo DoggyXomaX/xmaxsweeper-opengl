@@ -8,7 +8,7 @@
 scene (MenuScene,
   int m_time;
   const float *m_vertexInput;
-  unsigned int m_vbo;
+  GLuint m_vbo;
   unsigned int m_ebo;
   unsigned int m_vao;
   unsigned int m_shaderId;
