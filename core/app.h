@@ -13,6 +13,7 @@
 class (App, (int argc, char *argv[]),
   GLFWwindow *m_window;
   int m_currentScene;
+  bool m_debugWireframe;
 );
 
 #endif  // __APP_H__

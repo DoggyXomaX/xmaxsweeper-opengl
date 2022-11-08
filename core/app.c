@@ -11,6 +11,7 @@ private (App, void, OnInput(GLFWwindow *window, int key, int scancode, int actio
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     puts("[ESC]");
+    glfwSetWindowShouldClose(this->m_window, GL_TRUE);
     return;
   }
 
@@ -22,6 +23,13 @@ private (App, void, OnInput(GLFWwindow *window, int key, int scancode, int actio
     invoke (SceneManager, ChangeScene(this->m_currentScene));
     return;
   }
+
+  if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+    puts("[W]");
+    this->m_debugWireframe ^= true;
+    glPolygonMode(GL_FRONT_AND_BACK, this->m_debugWireframe ? GL_LINE : GL_FILL);
+    return;
+  }
 }
 
 public (App, int, Init(int argc, char *argv[])) {
@@ -30,6 +38,7 @@ public (App, int, Init(int argc, char *argv[])) {
 
   this->m_window = nullptr;
   this->m_currentScene = 0;
+  this->m_debugWireframe = false;
 
   printf("App executed!\n");
   fflush(stdout);
