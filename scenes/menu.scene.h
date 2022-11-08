@@ -7,12 +7,10 @@
 
 scene (MenuScene,
   int m_time;
-  const float *m_vertexInput;
+  const GLfloat *m_vertexInput;
   GLuint m_vbo;
-  unsigned int m_ebo;
-  unsigned int m_vao;
-  unsigned int m_shaderId;
-  unsigned int m_vertexCount;
+  GLuint m_vao;
+  GLuint m_shaderId;
 );
 
 #endif  // __MENU_SCENE_H__

@@ -1,6 +1,6 @@
 #include "menu.scene.h"
 
-const float TRIANGLE[9] = {
+const GLfloat TRIANGLE[9] = {
   -0.5f * (9.0f / 16.0f), -0.5f, 0.0f,
    0.5f * (9.0f / 16.0f), -0.5f, 0.0f,
    0.0f * (9.0f / 16.0f),  0.5f, 0.0f,
@@ -17,7 +17,6 @@ public (MenuScene, int, Init(GLFWwindow *window)) {
 
   this->m_time = 0;
   this->m_vertexInput = TRIANGLE;
-  this->m_vertexCount = lengthof(TRIANGLE);
 
   return 0;
 }
@@ -45,16 +44,19 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   puts("MenuScene: START");
   glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
   
-  // Buffers
+  // Gen buffers
   glGenBuffers(1, &this->m_vbo);
+
+  // Get vertex arrays
+  glGenVertexArrays(1, &this->m_vao);
+
+  // Connect them
+  glBindVertexArray(this->m_vao);
   glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(TRIANGLE), this->m_vertexInput, GL_STATIC_DRAW);
-
-  // VertexArray
-  glGenVertexArrays(1, &this->m_vao);
-  glBindVertexArray(this->m_vao);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
   glEnableVertexAttribArray(0);
+  glBindVertexArray(0);
 
   // Vertex shader
   GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -108,9 +110,11 @@ public (MenuScene, void, Update(GLFWwindow *window)) {
   }
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+ 
   glUseProgram(this->m_shaderId);
   glBindVertexArray(this->m_vao);
   glDrawArrays(GL_TRIANGLES, 0, 3);
+  glBindVertexArray(0);
   
   glfwSwapBuffers(window);
 }
