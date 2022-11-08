@@ -1,9 +1,15 @@
 #include "menu.scene.h"
 
-const GLfloat TRIANGLE[9] = {
-  -0.5f * (9.0f / 16.0f), -0.5f, 0.0f,
-   0.5f * (9.0f / 16.0f), -0.5f, 0.0f,
-   0.0f * (9.0f / 16.0f),  0.5f, 0.0f,
+GLfloat TRIANGLE[] = {
+     0.5f,  0.5f, 0.0f,  // Верхний правый угол
+     0.5f, -0.5f, 0.0f,  // Нижний правый угол
+    -0.5f, -0.5f, 0.0f,  // Нижний левый угол
+    -0.5f,  0.5f, 0.0f   // Верхний левый угол
+};
+
+GLuint INDICES[] = {
+  0, 1, 3,
+  1, 2, 3
 };
 
 #include <basic.vert.h>
@@ -16,7 +22,6 @@ public (MenuScene, int, Init(GLFWwindow *window)) {
   context (MenuScene);
 
   this->m_time = 0;
-  this->m_vertexInput = TRIANGLE;
 
   return 0;
 }
@@ -46,17 +51,24 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   
   // Gen buffers
   glGenBuffers(1, &this->m_vbo);
-
-  // Get vertex arrays
-  glGenVertexArrays(1, &this->m_vao);
-
-  // Connect them
-  glBindVertexArray(this->m_vao);
   glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(TRIANGLE), this->m_vertexInput, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(TRIANGLE), TRIANGLE, GL_STATIC_DRAW);
+
+  // Gen element buffer
+  glGenBuffers(1, &this->m_ebo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->m_ebo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(INDICES), INDICES, GL_STATIC_DRAW);
+  
+  // Gen vertex arrays
+  glGenVertexArrays(1, &this->m_vao);
+  glBindVertexArray(this->m_vao);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
   glEnableVertexAttribArray(0);
+ 
+  // Unbind all
   glBindVertexArray(0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   // Vertex shader
   GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -96,6 +108,8 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   glUseProgram(this->m_shaderId);
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
+
+  puts("MenuScene: Start complete");
 }
 
 public (MenuScene, void, Update(GLFWwindow *window)) {
@@ -110,11 +124,17 @@ public (MenuScene, void, Update(GLFWwindow *window)) {
   }
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
- 
   glUseProgram(this->m_shaderId);
+
+  glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo);
   glBindVertexArray(this->m_vao);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-  glBindVertexArray(0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->m_ebo);
   
+  glDrawElements(GL_TRIANGLES, lengthof(INDICES), GL_UNSIGNED_INT, 0);
+  
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);  
+
   glfwSwapBuffers(window);
 }
