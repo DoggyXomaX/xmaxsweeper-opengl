@@ -2,27 +2,25 @@
 
 object (App);
 
-int QKey = 0;
+private (App, void, OnResize(GLFWwindow *window, int width, int height)) {
+  glViewport(0, 0, width, height);
+}
 
-private (App, void, OnInput()) {
+private (App, void, OnInput(GLFWwindow *window, int key, int scancode, int action, int mods)) {
   context (App);
 
-  if (glfwGetKey(this->m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     puts("[ESC]");
-    glfwSetWindowShouldClose(this->m_window, true);
     return;
   }
 
-  int qKey = glfwGetKey(this->m_window, GLFW_KEY_Q);
-  if (QKey != qKey) {
-    QKey = qKey;
-    if (QKey == GLFW_PRESS) {
-      puts("[Q]");
-      this->m_currentScene++;
-      if (this->m_currentScene >= invoke (SceneManager, GetSceneCount()))
-        this->m_currentScene = 0;
-      invoke (SceneManager, ChangeScene(this->m_currentScene));
-    }
+  if (key == GLFW_KEY_Q && action == GLFW_PRESS) {
+    puts("[Q]");
+    this->m_currentScene++;
+    if (this->m_currentScene >= invoke (SceneManager, GetSceneCount()))
+      this->m_currentScene = 0;
+    invoke (SceneManager, ChangeScene(this->m_currentScene));
+    return;
   }
 }
 
@@ -40,6 +38,7 @@ public (App, int, Init(int argc, char *argv[])) {
     fprintf(stderr, "Failed to init WindowManager!\n");
     return result;
   }
+  invoke (WindowManager, SetResizeCallback(func (App, OnResize)));
   printf("WindowManager initialized successfully!\n");
   
   result = invoke (GameManager, Init(this->m_window));
@@ -56,11 +55,17 @@ public (App, int, Init(int argc, char *argv[])) {
   }
   printf("SceneManager initialized successfully!\n");
 
+  result = invoke (EventManager, Init(this->m_window, func (App, OnInput)));
+  if (result != 0) {
+    fprintf(stderr, "Failed to init EventManager\n");
+    return result;
+  }
+  printf("EventManager initialized successfully!\n");
+
   printf("Scene count: %d\n", invoke (SceneManager, GetSceneCount()));
   invoke (SceneManager, ChangeScene(0));
 
   while (!glfwWindowShouldClose(this->m_window)) {
-    invoke (App, OnInput());
     invoke (GameManager, MainLoop(this->m_window));
     glfwPollEvents();
   }

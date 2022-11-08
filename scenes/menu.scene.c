@@ -26,9 +26,23 @@ public (MenuScene, void, Destroy()) {
   destroy (MenuScene);
 }
 
+public (MenuScene, void, Key(GLFWwindow *window, int key, int scancode, int action, int mods)) {
+  if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    puts("MenuScene: LEFT");
+
+  if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    puts("MenuScene: UP");
+
+  if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+    puts("MenuScene: RIGHT");
+
+  if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    puts("MenuScene: DOWN");
+}
+
 public (MenuScene, void, Start(GLFWwindow *window)) {
   context (MenuScene);
-  puts("Menu scene start");
+  puts("MenuScene: START");
   glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
   
   glGenBuffers(1, &this->m_vbo);
@@ -48,7 +62,7 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    fprintf(stderr, "Failed to compile vertex shader:\n%s\n", infoLog);
+    fprintf(stderr, "MenuScene: Failed to compile vertex shader:\n%s\n", infoLog);
     return;
   }
 
@@ -59,7 +73,7 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-    fprintf(stderr, "Failed to compile fragment shader:\n%s\n", infoLog);
+    fprintf(stderr, "MenuScene: Failed to compile fragment shader:\n%s\n", infoLog);
     return;
   }
 
@@ -71,7 +85,7 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
   glGetProgramiv(this->m_shaderId, GL_LINK_STATUS, &success);
   if (!success) {
     glGetProgramInfoLog(this->m_shaderId, 512, NULL, infoLog);
-    fprintf(stderr, "Failed to link shader program:\n%s\n", infoLog);
+    fprintf(stderr, "MenuScene: Failed to link shader program:\n%s\n", infoLog);
     return;
   }
   glUseProgram(this->m_shaderId);
@@ -80,13 +94,13 @@ public (MenuScene, void, Start(GLFWwindow *window)) {
 }
 
 public (MenuScene, void, Update(GLFWwindow *window)) {
-  context (MenuScene);
   first_update (MenuScene);
+  context (MenuScene);
 
   this->m_time++;
   if (this->m_time >= 60) {
     this->m_time = 0;
-    printf("Vertex shader:\n%s\n", BASIC_VERT);
+    printf("MenuScene: TICK\n");
   }
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 

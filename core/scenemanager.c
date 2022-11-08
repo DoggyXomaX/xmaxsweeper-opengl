@@ -44,6 +44,7 @@ public (SceneManager, void, ChangeScene(int index)) {
   if (this->m_currentScene != nullptr) {
     printf("Destroying previous \"%s\" scene...\n", this->m_currentScene->name);
     this->m_currentScene->destroyFunc();
+    invoke (EventManager, SetKeyEvent(nullptr));
   }
 
   this->m_currentScene = scene;
@@ -53,6 +54,9 @@ public (SceneManager, void, ChangeScene(int index)) {
 
   puts("Applying update frame...");
   invoke (GameManager, SetUpdateCallback(this->m_currentScene->updateFunc));
+
+  puts("Applying key event");
+  invoke (EventManager, SetKeyEvent(this->m_currentScene->keyFunc));
 
   puts("Scene was changed successfully!");
 }

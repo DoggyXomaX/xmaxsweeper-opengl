@@ -11,6 +11,7 @@
 #include "scenetemplate.h"
 #include "../scenes/scenelist.h"
 #include "gamemanager.h"
+#include "eventmanager.h"
 
 callback (DestructorCallback, void, (void));
 

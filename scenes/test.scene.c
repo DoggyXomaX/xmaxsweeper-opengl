@@ -12,6 +12,10 @@ public (TestScene, void, Destroy(void)) {
   destroy (TestScene);
 }
 
+public (TestScene, void, Key(GLFWwindow *window, int key, int scancode, int action, int mods)) {
+  // Do nothing ?
+}
+
 public (TestScene, void, Start(GLFWwindow* window)) {
   glClearColor(0.0f, 0.5f, 0.5f, 1.0f);
   puts("Test scene start");
